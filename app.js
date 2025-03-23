@@ -17,6 +17,7 @@ app.use(
     credentials: true, // Allow cookies if needed
   })
 );
+app.options("*", cors());
 app.use(morgan("dev"));
 
 // Routes
