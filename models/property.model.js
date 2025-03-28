@@ -11,8 +11,9 @@ const propertySchema = new mongoose.Schema({
   baths: { type: Number, required: true },
   sqft: { type: Number, required: true },
   guests: { type: Number, required: true },
-  checkIn: { type: String, required: true },
-  checkOut: { type: String, required: true },
+  availableFrom: { type: String, required: true },
+  status: { type: String, enum: ["active", "inactive"], default: "active" }, // New field with default value
+  availableTo: { type: String, required: true },
   amenities: {
     wifi: { type: Boolean, default: false },
     parking: { type: Boolean, default: false },

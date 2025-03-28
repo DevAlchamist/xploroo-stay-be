@@ -1,5 +1,7 @@
-const Property = require("../models/Property");
+const Property = require("../models/property.model");
+const Review = require("../models/review.model");
 
+// @desc Get all properties
 // @route GET /api/properties
 const getAllProperties = async (req, res) => {
   try {
@@ -10,6 +12,7 @@ const getAllProperties = async (req, res) => {
   }
 };
 
+// @desc Get property by ID
 // @route GET /api/properties/:id
 const getPropertyById = async (req, res) => {
   try {
@@ -22,17 +25,23 @@ const getPropertyById = async (req, res) => {
   }
 };
 
-// @route POST /api/properties
 const createProperty = async (req, res) => {
+  console.log("Incoming property data:", req.body);
   try {
+    console.log("Incoming property data:", req.body);
+
+    // Create and save the property document
     const newProperty = new Property(req.body);
     const savedProperty = await newProperty.save();
+
     res.status(201).json(savedProperty);
   } catch (error) {
-    res.status(500).json({ message: "Failed to create property" });
+    console.error("Error creating property:", error);
+    res.status(500).json({ message: "Failed to create property", error });
   }
 };
 
+// @desc Update a property
 // @route PUT /api/properties/:id
 const updateProperty = async (req, res) => {
   try {
@@ -49,18 +58,29 @@ const updateProperty = async (req, res) => {
   }
 };
 
+// @desc Get properties based on filters
+// @route GET /api/properties/search
 const getPropertiesByQuery = async (req, res) => {
-  const { location, minPrice, maxPrice, type } = req.query;
+  try {
+    const { location, minPrice, maxPrice, type } = req.query;
 
-  let query = {};
-  if (location) query.location = location;
-  if (minPrice) query.price = { $gte: minPrice };
-  if (maxPrice) query.price = { ...query.price, $lte: maxPrice };
-  if (type) query.type = type;
+    let query = {};
+    if (location) query.location = location;
+    if (minPrice) query.price = { $gte: minPrice };
+    if (maxPrice) query.price = { ...query.price, $lte: maxPrice };
+    if (type) query.type = type;
 
-  const properties = await Property.find(query).populate("owner", "name email");
-  res.json(properties);
+    const properties = await Property.find(query).populate(
+      "owner",
+      "name email"
+    );
+    res.json(properties);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving properties" });
+  }
 };
+
+// @desc Delete a property
 // @route DELETE /api/properties/:id
 const deleteProperty = async (req, res) => {
   try {
@@ -81,4 +101,3 @@ module.exports = {
   updateProperty,
   deleteProperty,
 };
-F;

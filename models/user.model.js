@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema(
     phone: { type: String, unique: true, sparse: true },
     location: { type: String },
     bio: { type: String },
-    image: { type: String },
+    image: [{ type: String }],
     bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Booking" }], // Array of Booking ObjectIds
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }], // Array of Review ObjectIds
   },

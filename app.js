@@ -8,7 +8,10 @@ const app = express();
 connectDB();
 
 app.use(express.json());
-const allowedOrigins = ["https://xploroo-stays.vercel.app"]; // Add your frontend URL
+const allowedOrigins = [
+  "https://xploroo-stays.vercel.app",
+  "http://localhost:3000",
+]; // Add your frontend URL
 
 app.use(
   cors({
@@ -22,6 +25,8 @@ app.use(morgan("dev"));
 
 // Routes
 app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/properties", require("./routes/property.routes"));
+app.use("/api/user", require("./routes/user.routes"));
 
 // Test Route
 app.use("/", (req, res) => {
