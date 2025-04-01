@@ -27,6 +27,7 @@ app.use(morgan("dev"));
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/properties", require("./routes/property.routes"));
 app.use("/api/user", require("./routes/user.routes"));
+app.use("/api/payments", require("./routes/payment.routes"));
 
 // Test Route
 app.use("/", (req, res) => {

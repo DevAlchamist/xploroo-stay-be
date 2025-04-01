@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema(
     location: { type: String },
     bio: { type: String },
     image: [{ type: String }],
-    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Booking" }], // Array of Booking ObjectIds
+    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bookings" }], // Array of Booking ObjectIds
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }], // Array of Review ObjectIds
   },
   { timestamps: true }
