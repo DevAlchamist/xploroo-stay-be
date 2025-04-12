@@ -28,11 +28,12 @@ app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/properties", require("./routes/property.routes"));
 app.use("/api/user", require("./routes/user.routes"));
 app.use("/api/payments", require("./routes/payment.routes"));
+app.use("/api/email", require("./routes/email.routes"));
+app.use("/api/quizzes", require("./routes/quiz.routes"));
+app.use("/api/quiz/payment", require("./routes/quizPayement.routes"));
 
-// Test Route
 app.use("/", (req, res) => {
   res.status(200).json({ message: "API is working!" });
 });
 
-// Export app for use in serverless function
 module.exports = app;

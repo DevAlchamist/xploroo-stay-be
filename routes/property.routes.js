@@ -7,10 +7,11 @@ const {
   updateProperty,
   deleteProperty,
   getPropertiesByQuery,
+  getAllBookings,
 } = require("../controllers/property.controller");
 const { upload, uploadImages } = require("../controllers/upload.controller");
-
 router.get("/", getAllProperties);
+router.get("/bookings/all", getAllBookings);
 router.get("/search", getPropertiesByQuery);
 router.get("/:id", getPropertyById);
 router.post("/", createProperty);

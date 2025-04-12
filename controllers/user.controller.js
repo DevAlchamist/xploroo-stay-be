@@ -3,10 +3,15 @@ const User = require("../models/user.model");
 // @desc Get user profile
 // @route GET /api/users/:id
 const getUserProfile = async (req, res) => {
-  console.log(req.params.id)
+  console.log(req.params.id);
   try {
-    const user = await User.findById(req.params.id)
-    console.log(user)
+    const user = await User.findById(req.params.id).populate({
+      path: "bookings",
+      populate: {
+        path: "property",
+        model: "Property", // Make sure this matches your model name
+      },
+    });
     if (user) {
       res.json(user);
     } else {
@@ -20,7 +25,6 @@ const getUserProfile = async (req, res) => {
 // @desc Update user profile
 // @route PUT /api/users/:id
 const updateUserProfile = async (req, res) => {
-  console.log(req.body)
   try {
     const user = await User.findById(req.params.id);
     if (user) {

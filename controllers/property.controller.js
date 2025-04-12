@@ -1,5 +1,7 @@
+const Bookings = require("../models/booking.model");
 const Property = require("../models/property.model");
 const Review = require("../models/review.model");
+const handleEmail = require("./email.controller");
 
 // @desc Get all properties
 // @route GET /api/properties
@@ -33,7 +35,6 @@ const createProperty = async (req, res) => {
     // Create and save the property document
     const newProperty = new Property(req.body);
     const savedProperty = await newProperty.save();
-
     res.status(201).json(savedProperty);
   } catch (error) {
     console.error("Error creating property:", error);
@@ -58,6 +59,21 @@ const updateProperty = async (req, res) => {
   }
 };
 
+const getAllBookings = async (req, res) => {
+  try {
+    const booking = await Bookings.find()
+      .populate("user", "name email")
+      .populate("property", "title location price");
+
+    if (booking) {
+      res.json(booking);
+    } else {
+      res.status(404).json({ message: "booking not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
 // @desc Get properties based on filters
 // @route GET /api/properties/search
 const getPropertiesByQuery = async (req, res) => {
@@ -100,4 +116,5 @@ module.exports = {
   getPropertiesByQuery,
   updateProperty,
   deleteProperty,
+  getAllBookings,
 };

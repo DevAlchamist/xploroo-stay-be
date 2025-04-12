@@ -22,6 +22,7 @@ const propertySchema = new mongoose.Schema({
     tv: { type: Boolean, default: false },
   },
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }], // Array of Review ObjectIds
+  bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Bookings" }], // ✅ NEW field
 });
 
 const Property = mongoose.model("Property", propertySchema);
